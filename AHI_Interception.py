@@ -40,7 +40,8 @@ def post_message1(hwnd_self):
 
 
 class ICP:
-    def __init__(self):
+    def __init__(self, debug: bool = False) -> None:
+        self.debug = debug
         # interception.capture_keyboard()
         # interception.capture_mouse()
         interception.auto_capture_devices(keyboard=True, mouse=True)
@@ -76,7 +77,8 @@ class ICP:
             The delay between moving and clicking, default 0 (0.3).
         """
         interception.click(_x, _y, button=button, clicks=clicks, interval=interval, delay=delay)
-        print(f'{button} Mouse Button clicked ({_x}, {_y})')
+        if self.debug:
+            print(f'{button} Mouse Button clicked ({_x}, {_y})')  # noqa: T201
 
     def mouse_down(self,
                    _x: Optional[int] = None,
@@ -111,10 +113,11 @@ class ICP:
 
 
 class MainWin(tk.Tk):
-    def __init__(self, msg_hook, wnd_title, *args, **kwargs):
-        self.icp = ICP()
+    def __init__(self, msg_hook: dict, wnd_title: str, debug: bool = False, **kwargs) -> None:
+        self.debug = debug
+        self.icp = ICP(debug=debug)
         self.msg_hook = msg_hook
-        tk.Tk.__init__(self, *args, **kwargs)
+        tk.Tk.__init__(self, **kwargs)
         self.title(wnd_title)
         self.geometry('120x80+10+10')
         # store everything in a frame
@@ -151,7 +154,8 @@ class MainWin(tk.Tk):
         hwnd_e, msgid, wparam, lparam, time_, point = msg
         if hwnd_e != self.hwnd:
             return
-        print(msg)
+        if self.debug:
+            print(msg)  # noqa: T201
         match self.msg_hook.get(msgid):
             case 'wnd_show':
                 self.deiconify()
@@ -180,8 +184,8 @@ class MainWin(tk.Tk):
             case 'mup':
                 self.icp.mouse_up(*self.unpuck(lparam), button='middle')
             case _:
-                print('Неизвестная команда')  # noqa: T201
-                pass
+                if self.debug:
+                    print('Неизвестная команда')  # noqa: T201
 
     def unpuck(self, lparam):
         _x = win32api.LOWORD(lparam)
@@ -213,7 +217,7 @@ def post_message(wParam, lParam, hwnd):  # noqa: N803
     win32api.PostMessage(hwnd, 1024, wParam, lParam)
 
 
-def main(test=False):
+def main(test=False, debug=False):
     if not test:
         wnd_title, hwnd_cm = validate_transferred_argument()
     else:
@@ -221,7 +225,7 @@ def main(test=False):
         hwnd_cm = 7736026
     print(f'{wnd_title = }  {hwnd_cm = }')  # noqa: T201, E251, E202
 
-    app = MainWin(MSG_HOOK, wnd_title)
+    app = MainWin(MSG_HOOK, wnd_title, debug=debug)
 
     # отправляем clickermann-у свой hwnd
     post_message_cm = partial(post_message, hwnd=hwnd_cm)
@@ -233,7 +237,7 @@ def main(test=False):
 
 if __name__ == '__main__':
     try:
-        main(test=False)
+        main(test=False, debug=True)
     except KeyboardInterrupt:
         print('Работа программы прервана пользователем')  # noqa: T201
         exit_from_program()
