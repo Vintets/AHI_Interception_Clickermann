@@ -12,20 +12,20 @@ import win32gui
 
 
 MSG_HOOK = {
-    'wnd_show': 0xC430,
-    'lclick': 0xC435,
-    'rclick': 0xC436,
-    'mclick': 0xC437,
-    'mouse4click': 0xC438,
-    'mouse5click': 0xC439,
-    'dblclick': 0xC43A,
+    0xC430: 'wnd_show',
+    0xC435: 'lclick',
+    0xC436: 'rclick',
+    0xC437: 'mclick',
+    0xC438: 'mouse4click',
+    0xC439: 'mouse5click',
+    0xC43A: 'dblclick',
 
-    'ldown': 0xC43B,
-    'lup': 0xC43C,
-    'rdown': 0xC43D,
-    'rup': 0xC43E,
-    'mdown': 0xC43F,
-    'mup': 0xC440,
+    0xC43B: 'ldown',
+    0xC43C: 'lup',
+    0xC43D: 'rdown',
+    0xC43E: 'rup',
+    0xC43F: 'mdown',
+    0xC440: 'mup',
 }
 
 
@@ -152,32 +152,36 @@ class MainWin(tk.Tk):
         if hwnd_e != self.hwnd:
             return
         print(msg)
-        if msgid == self.msg_hook.get('wnd_show'):
-            self.deiconify()
-        elif msgid == self.msg_hook.get('lclick'):
-            self.icp.click(*self.unpuck(lparam), button='left')
-        elif msgid == self.msg_hook.get('rclick'):
-            self.icp.click(*self.unpuck(lparam), button='right')
-        elif msgid == self.msg_hook.get('mclick'):
-            self.icp.click(*self.unpuck(lparam), button='middle')
-        elif msgid == self.msg_hook.get('mouse4click'):
-            self.icp.click(*self.unpuck(lparam), button='mouse4')
-        elif msgid == self.msg_hook.get('mouse5click'):
-            self.icp.click(*self.unpuck(lparam), button='mouse5')
-        elif msgid == self.msg_hook.get('dblclick'):
-            self.icp.click(*self.unpuck(lparam), button='left', clicks=2)
-        elif msgid == self.msg_hook.get('ldown'):
-            self.icp.mouse_down(*self.unpuck(lparam), button='left')
-        elif msgid == self.msg_hook.get('lup'):
-            self.icp.mouse_up(*self.unpuck(lparam), button='left')
-        elif msgid == self.msg_hook.get('rdown'):
-            self.icp.mouse_down(*self.unpuck(lparam), button='right')
-        elif msgid == self.msg_hook.get('rup'):
-            self.icp.mouse_up(*self.unpuck(lparam), button='right')
-        elif msgid == self.msg_hook.get('mdown'):
-            self.icp.mouse_down(*self.unpuck(lparam), button='middle')
-        elif msgid == self.msg_hook.get('mup'):
-            self.icp.mouse_up(*self.unpuck(lparam), button='middle')
+        match self.msg_hook.get(msgid):
+            case 'wnd_show':
+                self.deiconify()
+            case 'lclick':
+                self.icp.click(*self.unpuck(lparam), button='left')
+            case 'rclick':
+                self.icp.click(*self.unpuck(lparam), button='right')
+            case 'mclick':
+                self.icp.click(*self.unpuck(lparam), button='middle')
+            case 'mouse4click':
+                self.icp.click(*self.unpuck(lparam), button='mouse4')
+            case 'mouse5click':
+                self.icp.click(*self.unpuck(lparam), button='mouse5')
+            case 'dblclick':
+                self.icp.click(*self.unpuck(lparam), button='left', clicks=2)
+            case 'ldown':
+                self.icp.mouse_down(*self.unpuck(lparam), button='left')
+            case 'lup':
+                self.icp.mouse_up(*self.unpuck(lparam), button='left')
+            case 'rdown':
+                self.icp.mouse_down(*self.unpuck(lparam), button='right')
+            case 'rup':
+                self.icp.mouse_up(*self.unpuck(lparam), button='right')
+            case 'mdown':
+                self.icp.mouse_down(*self.unpuck(lparam), button='middle')
+            case 'mup':
+                self.icp.mouse_up(*self.unpuck(lparam), button='middle')
+            case _:
+                print('Неизвестная команда')  # noqa: T201
+                pass
 
     def unpuck(self, lparam):
         _x = win32api.LOWORD(lparam)
