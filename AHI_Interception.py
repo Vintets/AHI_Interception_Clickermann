@@ -29,11 +29,11 @@ MSG_HOOK = {
 }
 
 
-def post_message_quit(hwnd_self):
+def post_message_quit(hwnd_self: int) -> None:
     win32api.PostMessage(hwnd_self, win32con.WM_QUIT, 0, 0)
 
 
-def post_message1(hwnd_self):
+def post_message1(hwnd_self: int) -> None:
     # user32.PostMessageA(hwnd_self, 0x0400, 0, 0)
     win32gui.PostMessage(hwnd_self, 0x0400, 0, 0)
     print(f'send event to {hwnd_self}')  # noqa: T201
@@ -46,10 +46,10 @@ class ICP:
         # interception.capture_mouse()
         interception.auto_capture_devices(keyboard=True, mouse=True)
 
-    def move(self, _x, _y):
+    def move(self, _x: Optional[int] = None, _y: Optional[int] = None) -> None:
         interception.move_to(_x, _y)
 
-    def move_relative(self, _x, _y):
+    def move_relative(self, _x: Optional[int] = None, _y: Optional[int] = None) -> None:
         interception.move_relative(_x, _y)
 
     def click(self,
@@ -59,7 +59,7 @@ class ICP:
               clicks: int = 1,
               interval: int | float = 0.1,
               delay: int | float = 0,
-              ):
+              ) -> None:
         """Presses a mouse button.
 
         Parameters
@@ -85,7 +85,7 @@ class ICP:
                    _y: Optional[int] = None,
                    button: str = 'left',
                    delay: int | float = 0,
-                   ):
+                   ) -> None:
         if _x is not None:
             interception.move_to(_x, _y)
             time.sleep(delay)
@@ -97,14 +97,14 @@ class ICP:
                  _y: Optional[int] = None,
                  button: str = 'left',
                  delay: int | float = 0,
-                 ):
+                 ) -> None:
         if _x is not None:
             interception.move_to(_x, _y)
             time.sleep(delay)
 
         interception.mouse_up(button)
 
-    def keypress(self, key: str, presses: int = 1, interval: int | float = 0.1, modif_key=None):
+    def keypress(self, key: str, presses: int = 1, interval: int | float = 0.1, modif_key=None) -> None:
         if modif_key is not None:
             with interception.hold_key(modif_key):
                 interception.press(key, presses=presses, interval=interval)
@@ -139,7 +139,7 @@ class MainWin(tk.Tk):
         # self.tick()
         pass
 
-    def tick(self):
+    def tick(self) -> None:
         self.after(20, self.tick)  # <----------- this is the method you are looking for
         code, msg = win32gui.GetMessage(0, 0, 0)
         # print(code, msg)
@@ -150,7 +150,7 @@ class MainWin(tk.Tk):
         win32gui.TranslateMessage(msg)
         win32gui.DispatchMessage(msg)
 
-    def handler(self, msg):
+    def handler(self, msg: tuple) -> None:
         hwnd_e, msgid, wparam, lparam, time_, point = msg
         if hwnd_e != self.hwnd:
             return
@@ -187,12 +187,12 @@ class MainWin(tk.Tk):
                 if self.debug:
                     print('Неизвестная команда')  # noqa: T201
 
-    def unpuck(self, lparam):
+    def unpuck(self, lparam: int) -> tuple[int, int]:
         _x = win32api.LOWORD(lparam)
         _y = win32api.HIWORD(lparam)
         return _x, _y
 
-    def test_command(self):
+    def test_command(self) -> None:
         self.icp.click(*(200, 300), button='left')
 
 
@@ -213,11 +213,11 @@ def validate_transferred_argument() -> tuple[str, int]:
     return wnd_title, hwnd_cm
 
 
-def post_message(wParam, lParam, hwnd):  # noqa: N803
+def post_message(wParam: int, lParam: int, hwnd: int) -> None:  # noqa: N803
     win32api.PostMessage(hwnd, 1024, wParam, lParam)
 
 
-def main(test=False, debug=False):
+def main(test: bool = False, debug: bool = False) -> None:
     if not test:
         wnd_title, hwnd_cm = validate_transferred_argument()
     else:

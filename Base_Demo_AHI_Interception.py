@@ -13,4 +13,3 @@ with interception.hold_key('shift'):
     interception.press('a')
 
 interception.click(120, 160, button='right', delay=1)
-
