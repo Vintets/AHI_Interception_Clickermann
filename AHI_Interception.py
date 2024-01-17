@@ -250,10 +250,6 @@ if __name__ == '__main__':
     if sys.platform == 'win32':
         os.system('color 71')
         os.system('mode con cols=%d lines=%d' % (_width, _hight))
-    else:
-        os.system('setterm -background white -foreground white -store')
-        # ubuntu terminal
-        os.system('setterm -term linux -back $blue -fore white -clear')
 
     authorship(__author__, __title__, __version__, __copyright__)  # width=_width
 
