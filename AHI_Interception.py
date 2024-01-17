@@ -13,6 +13,7 @@ import time
 import tkinter as tk
 from typing import Optional
 
+from accessory import authorship
 import interception
 import win32api
 import win32con
@@ -253,6 +254,8 @@ if __name__ == '__main__':
         os.system('setterm -background white -foreground white -store')
         # ubuntu terminal
         os.system('setterm -term linux -back $blue -fore white -clear')
+
+    authorship(__author__, __title__, __version__, __copyright__)  # width=_width
 
     try:
         main(test=False, debug=True)
