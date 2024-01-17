@@ -97,4 +97,5 @@
     // "python.linting.pylintPath": "env\\Scripts\\pylint.exe",
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
+    "flake8.args": ["--config=.flake8"],
 }

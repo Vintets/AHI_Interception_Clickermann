@@ -1,16 +1,17 @@
+from functools import partial
 import os
 import sys
 import time
-from functools import partial
-from typing import Optional
 import tkinter as tk
-import win32api
-import win32gui
-import win32con
+from typing import Optional
+
 import interception
+import win32api
+import win32con
+import win32gui
 
 
-MSG_HOOK ={
+MSG_HOOK = {
     'wnd_show': 0xC430,
     'lclick': 0xC435,
     'rclick': 0xC436,
@@ -35,7 +36,7 @@ def post_message_quit(hwnd_self):
 def post_message1(hwnd_self):
     # user32.PostMessageA(hwnd_self, 0x0400, 0, 0)
     win32gui.PostMessage(hwnd_self, 0x0400, 0, 0)
-    print(f'send event to {hwnd_self}')
+    print(f'send event to {hwnd_self}')  # noqa: T201
 
 
 class ICP:
@@ -44,15 +45,15 @@ class ICP:
         # interception.capture_mouse()
         interception.auto_capture_devices(keyboard=True, mouse=True)
 
-    def move(self, x, y):
-        interception.move_to(x, y)
+    def move(self, _x, _y):
+        interception.move_to(_x, _y)
 
-    def move_relative(self, x, y):
-        interception.move_relative(x, y)
+    def move_relative(self, _x, _y):
+        interception.move_relative(_x, _y)
 
     def click(self,
-              x: Optional[int] = None,
-              y: Optional[int] = None,
+              _x: Optional[int] = None,
+              _y: Optional[int] = None,
               button: str = 'left',
               clicks: int = 1,
               interval: int | float = 0.1,
@@ -74,29 +75,29 @@ class ICP:
         delay :class:`int | float`:
             The delay between moving and clicking, default 0 (0.3).
         """
-        interception.click(x, y, button=button, clicks=clicks, interval=interval, delay=delay)
-        print(f'{button} Mouse Button clicked ({x}, {y})')
+        interception.click(_x, _y, button=button, clicks=clicks, interval=interval, delay=delay)
+        print(f'{button} Mouse Button clicked ({_x}, {_y})')
 
     def mouse_down(self,
-              x: Optional[int] = None,
-              y: Optional[int] = None,
-              button: str = 'left',
-              delay: int | float = 0,
-              ):
-        if x is not None:
-            interception.move_to(x, y)
+                   _x: Optional[int] = None,
+                   _y: Optional[int] = None,
+                   button: str = 'left',
+                   delay: int | float = 0,
+                   ):
+        if _x is not None:
+            interception.move_to(_x, _y)
             time.sleep(delay)
 
         interception.mouse_down(button)
 
     def mouse_up(self,
-              x: Optional[int] = None,
-              y: Optional[int] = None,
-              button: str = 'left',
-              delay: int | float = 0,
-              ):
-        if x is not None:
-            interception.move_to(x, y)
+                 _x: Optional[int] = None,
+                 _y: Optional[int] = None,
+                 button: str = 'left',
+                 delay: int | float = 0,
+                 ):
+        if _x is not None:
+            interception.move_to(_x, _y)
             time.sleep(delay)
 
         interception.mouse_up(button)
@@ -120,10 +121,10 @@ class MainWin(tk.Tk):
         # self.container = tk.Frame(self)
         # self.container.pack(side='top', fill='both', expand=True)
 
-        print(f'{self.winfo_id() = }')
+        print(f'{self.winfo_id() = }')  # noqa: T201, E251, E202
         self.hwnd = int(self.frame(), 16)
-        print(f'{self.hwnd = }  {self.frame()}')
-        bt1 = tk.Button(self, text='PostMessage 1', command=lambda: post_message1(self.hwnd)) # callback=lambda x=x: f(x)
+        print(f'{self.hwnd = }  {self.frame()}')  # noqa: T201, E251, E202
+        bt1 = tk.Button(self, text='PostMessage 1', command=lambda: post_message1(self.hwnd))  # callback=lambda x=x: f(x)
         bt1.pack()
         bt2 = tk.Button(self, text='Скрыть окно', command=self.withdraw)
         bt2.pack()
@@ -179,9 +180,9 @@ class MainWin(tk.Tk):
             self.icp.mouse_up(*self.unpuck(lparam), button='middle')
 
     def unpuck(self, lparam):
-        x = win32api.LOWORD(lparam)
-        y = win32api.HIWORD(lparam)
-        return x,y
+        _x = win32api.LOWORD(lparam)
+        _y = win32api.HIWORD(lparam)
+        return _x, _y
 
     def test_command(self):
         self.icp.click(*(200, 300), button='left')
@@ -199,12 +200,12 @@ def validate_transferred_argument() -> tuple[str, int]:
         wnd_title = sys.argv[1]
         hwnd_cm = int(sys.argv[2])
     except (IndexError, ValueError):
-        print('Не переданы правильные параметры запуска')
+        print('Не переданы правильные параметры запуска')  # noqa: T201
         exit_from_program(code=1)
     return wnd_title, hwnd_cm
 
 
-def post_message(wParam, lParam, hwnd):
+def post_message(wParam, lParam, hwnd):  # noqa: N803
     win32api.PostMessage(hwnd, 1024, wParam, lParam)
 
 
@@ -214,21 +215,21 @@ def main(test=False):
     else:
         wnd_title = 'tktest'
         hwnd_cm = 7736026
-    print(f'{wnd_title = }  {hwnd_cm = }')
+    print(f'{wnd_title = }  {hwnd_cm = }')  # noqa: T201, E251, E202
 
     app = MainWin(MSG_HOOK, wnd_title)
 
     # отправляем clickermann-у свой hwnd
-    post_message_CM = partial(post_message, hwnd=hwnd_cm)
-    post_message_CM(app.hwnd, 0)
+    post_message_cm = partial(post_message, hwnd=hwnd_cm)
+    post_message_cm(app.hwnd, 0)
 
     app.tick()
     app.mainloop()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         main(test=False)
     except KeyboardInterrupt:
-        print('Работа программы прервана пользователем')
+        print('Работа программы прервана пользователем')  # noqa: T201
         exit_from_program()
