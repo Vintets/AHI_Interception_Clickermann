@@ -1,6 +1,6 @@
 ﻿#name "AHI_Interception_lib"
 // Author: Vint
-// Version: 1.0 (30.10.2023)
+// Version: 1.1 (30.10.2023)
 // Скрипт для Clickermann v4.13.014
 // подключение AHI_Interception_lib:
 // #include "..\Libs\AHI_Interception_lib.cms"

@@ -1,3 +1,11 @@
+
+__version_info__ = ('1', '1', '0')
+__version__ = '.'.join(__version_info__)
+__author__ = 'master by Vint'
+__title__ = '--- AHI_Interception_Clickermann ---'
+__copyright__ = 'Copyright 2024 (c)  bitbucket.org/Vintets'
+
+
 from functools import partial
 import os
 import sys
@@ -236,6 +244,16 @@ def main(test: bool = False, debug: bool = False) -> None:
 
 
 if __name__ == '__main__':
+    _width = 130
+    _hight = 50
+    if sys.platform == 'win32':
+        os.system('color 71')
+        os.system('mode con cols=%d lines=%d' % (_width, _hight))
+    else:
+        os.system('setterm -background white -foreground white -store')
+        # ubuntu terminal
+        os.system('setterm -term linux -back $blue -fore white -clear')
+
     try:
         main(test=False, debug=True)
     except KeyboardInterrupt:
