@@ -1,0 +1,81 @@
+# System
+Thumbs.db
+.DS_Store
+*.bak
+*~
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Venv
+/env/
+/env2/
+/venv/
+env.bak/
+venv.bak/
+
+# Configs
+# /.vscode/
+**/.env
+
+# Project dirs
+/zProjectDevelopment/*
+/media/
+/screenshots/*
+
+# Project files
+cookies*.txt
+
+# Simlinks
+
+# Log files
+/logs/
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Other files
+*_old*
+*_backup*
+Очистка_компил_py3.bat
+*.png
+*.jpg
+*.webm
+*.mp4
+*.mkv
+*.wav
+*.mp3
+*.m4a
+*.exe
+!/zProjectDevelopment/_ProjectDescription.txt
+!/screenshots/*_screenshot_*.png
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST

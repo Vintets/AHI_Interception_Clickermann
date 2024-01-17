@@ -1,0 +1,49 @@
+
+# расположение
+#WIN#
+cd "$YandexDisk/_Projects_Py/AHI_Interception_Clickermann"
+cd $YandexDisk/_Projects_Py/AHI_Interception_Clickermann
+
+
+# запуск
+python3 sapper_scum.py [--noconsole]
+
+
+# ==================================================================================================
+            *** Git ***
+
+Проект AHI_Interception_Clickermann
+    cd "$YandexDisk/_Projects_Py/AHI_Interception_Clickermann"
+    git remote add origin git@bitbucket.org:Vintets/ahi_interception_clickermann.git
+    git remote set-url origin --add git@github.com:Vintets/AHI_Interception_Clickermann.git
+
+    git it
+    git push -u origin master
+    git push origin master
+
+
+
+# ==================================================================================================
+            *** Анализ ***
+
+$HWND = 20712490
+$x = 30
+$y = 50
+
+POSTMESSAGE($HWND, 0x0201, 0x0001, $x + ($y*65536))
+waitms(50)
+POSTMESSAGE($HWND, 0x0202, 0x0001, $x + ($y*65536))
+waitms(50)
+
+
+POSTMESSAGE($HWND, 0xC430, 0x0001, $x + ($y*65536))
+
+
+HALT
+
+
+
+// *************************************************************************************************
+# ==================================================================================================
+
+

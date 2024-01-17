@@ -1,0 +1,138 @@
+﻿#name "AHI_Interception_lib"
+// Author: Vint
+// Version: 1.0 (30.10.2023)
+// Скрипт для Clickermann v4.13.014
+// подключение AHI_Interception_lib:
+// #include "..\Libs\AHI_Interception_lib.cms"
+
+
+//                              Настройки
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// Заголовок питоновского окна (лучше задавать из рабочего скрипта)
+IF($AHI_wnd_title_py == 0)
+    $AHI_wnd_title_py = "AHI_Interception_py"
+END_IF
+
+$AHI_script_name = "/C python AHI_Interception.py"
+$command_par = STRCONCAT($AHI_script_name, " ", $AHI_wnd_title_py, " ", $_hwnd_self)
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+SUB(GetResponse)
+    // прием сообщения
+    $isnew = 0
+    WHILE($isnew = 0)
+        GETMESSAGE($wPar, $lPar, $isnew)
+        WAITMS(50)
+    END_CYC
+    // print("wParam:", $wPar, "  lParam:", $lPar, "  $isnew:", $isnew)
+END_SUB
+
+SUB(clear_message_queue)
+    $isnew = 1
+    WHILE($isnew == 1)
+        GETMESSAGE($wPar, $lPar, $isnew)
+        WAITMS(10)
+    END_CYC
+END_SUB
+
+SUB(init_ICP)
+    // запуск копонента на python и получение его hwnd
+    EXECUTE("cmd.exe", $command_par)
+    GetResponse()
+    $hwnd_ICP = $wPar
+    LOGWRITE("hwnd_ICP = ", $hwnd_ICP)
+END_SUB
+
+#define AI_wnd_show:0xC430
+SUB(ICP_wnd_show)
+    // показывает созданное окно python
+    PostMessage($hwnd_ICP, AI_wnd_show, 0, 0)
+END_SUB
+
+#define AI_lclick:0xC435
+SUB(ICP_lclick, $ICP_x, $ICP_y)
+    // ICP lclick
+    PostMessage($hwnd_ICP, AI_lclick, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_rclick:0xC436
+SUB(ICP_rclick, $ICP_x, $ICP_y)
+    // ICP rclick
+    PostMessage($hwnd_ICP, AI_rclick, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mclick:0xC437
+SUB(ICP_mclick, $ICP_x, $ICP_y)
+    // ICP mclick
+    PostMessage($hwnd_ICP, AI_mclick, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mouse4click:0xC438
+SUB(ICP_mouse4click, $ICP_x, $ICP_y)
+    // ICP mouse4click
+    PostMessage($hwnd_ICP, AI_mouse4click, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mouse5click:0xC439
+SUB(ICP_mouse5click, $ICP_x, $ICP_y)
+    // ICP mouse5click
+    PostMessage($hwnd_ICP, AI_mouse5click, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_dblclick:0xC43A
+SUB(ICP_dblclick, $ICP_x, $ICP_y)
+    // ICP dblclick
+    PostMessage($hwnd_ICP, AI_dblclick, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+//------------------------------------------------------------------------------
+#define AI_ldown:0xC43B
+SUB(ICP_ldown, $ICP_x, $ICP_y)
+    // ICP ldown
+    PostMessage($hwnd_ICP, AI_ldown, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_lup:0xC43C
+SUB(ICP_lup, $ICP_x, $ICP_y)
+    // ICP lup
+    PostMessage($hwnd_ICP, AI_lup, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_rdown:0xC43D
+SUB(ICP_rdown, $ICP_x, $ICP_y)
+    // ICP rdown
+    PostMessage($hwnd_ICP, AI_rdown, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_rup:0xC43E
+SUB(ICP_rup, $ICP_x, $ICP_y)
+    // ICP rup
+    PostMessage($hwnd_ICP, AI_rup, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mdown:0xC43F
+SUB(ICP_mdown, $ICP_x, $ICP_y)
+    // ICP mdown
+    PostMessage($hwnd_ICP, AI_mdown, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mup:0xC440
+SUB(ICP_mup, $ICP_x, $ICP_y)
+    // ICP mup
+    PostMessage($hwnd_ICP, AI_mup, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+//------------------------------------------------------------------------------
+
+
+// =============================================================================
+//##############################################################################
+
+// Start
+WAITMS(200)
+
+LOGWRITE($command_par)
+clear_message_queue()
+init_ICP()
