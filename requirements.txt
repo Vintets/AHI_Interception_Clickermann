@@ -1,0 +1,4 @@
+interception-python==0.0.1
+    # via -r requirements_312_win_core_2023.12.25.in
+pywin32==306
+    # via -r requirements_312_win_core_2023.12.25.in

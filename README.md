@@ -15,13 +15,13 @@ Working with AHI_Interception in Clickermann via Python
 ## Зависимости Requirements
 
 ![Python version](https://img.shields.io/badge/python-3.9%2B-blue)
-> Требуется Python 3.9.7+
+> Требуется Python 3.10.0+
 
 Установка зависимостей:
 ```sh
 pip3 install -r requirements.txt
 ```
-(added only interception-python module)
+(added interception-python, pywin32 modules)
 
 
 ## Установка драйвера AHI Interception
