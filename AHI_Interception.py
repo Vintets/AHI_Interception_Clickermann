@@ -35,6 +35,10 @@ MSG_HOOK = {
     0xC43E: 'rup',
     0xC43F: 'mdown',
     0xC440: 'mup',
+    0xC441: 'mouse4down',
+    0xC442: 'mouse4up',
+    0xC443: 'mouse5down',
+    0xC444: 'mouse5up',
 }
 
 
@@ -192,6 +196,14 @@ class MainWin(tk.Tk):
                 self.icp.mouse_down(*self.unpuck(lparam), button='middle')
             case 'mup':
                 self.icp.mouse_up(*self.unpuck(lparam), button='middle')
+            case 'mouse4down':
+                self.icp.mouse_down(*self.unpuck(lparam), button='mouse4')
+            case 'mouse4up':
+                self.icp.mouse_up(*self.unpuck(lparam), button='mouse4')
+            case 'mouse5down':
+                self.icp.mouse_down(*self.unpuck(lparam), button='mouse5')
+            case 'mouse5up':
+                self.icp.mouse_up(*self.unpuck(lparam), button='mouse5')
             case _:
                 if self.debug:
                     print('Неизвестная команда')  # noqa: T201

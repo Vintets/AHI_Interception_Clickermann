@@ -124,6 +124,30 @@ SUB(ICP_mup, $ICP_x, $ICP_y)
     PostMessage($hwnd_ICP, AI_mup, 0x0001, $ICP_x + ($ICP_y * 65536))
 END_SUB
 
+#define AI_mouse4down:0xC441
+SUB(ICP_mouse4down, $ICP_x, $ICP_y)
+    // ICP mouse4down
+    PostMessage($hwnd_ICP, AI_mouse4down, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mouse4up:0xC442
+SUB(ICP_mouse4up, $ICP_x, $ICP_y)
+    // ICP mouse4up
+    PostMessage($hwnd_ICP, AI_mouse4up, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mouse5down:0xC443
+SUB(ICP_mouse5down, $ICP_x, $ICP_y)
+    // ICP mouse5down
+    PostMessage($hwnd_ICP, AI_mouse5down, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
+#define AI_mouse5up:0xC444
+SUB(ICP_mouse5up, $ICP_x, $ICP_y)
+    // ICP mouse5up
+    PostMessage($hwnd_ICP, AI_mouse5up, 0x0001, $ICP_x + ($ICP_y * 65536))
+END_SUB
+
 //------------------------------------------------------------------------------
 
 
