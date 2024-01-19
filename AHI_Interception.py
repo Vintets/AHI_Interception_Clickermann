@@ -40,6 +40,9 @@ MSG_HOOK = {
     0xC443: 'mouse5down',
     0xC444: 'mouse5up',
 
+    0xC449: 'wheeldown',
+    0xC44A: 'wheelup',
+
     0xC44B: 'move',
     0xC44C: 'mover',
 }
@@ -119,6 +122,14 @@ class ICP:
             time.sleep(delay)
 
         interception.mouse_up(button)
+
+    def wheeldown(self, mult: Optional[int] = 1):
+        for _ in range(mult):
+            interception.scroll(direction='down')
+
+    def wheelup(self, mult: Optional[int] = 1):
+        for _ in range(mult):
+            interception.scroll(direction='up')
 
     def keypress(self, key: str, presses: int = 1, interval: int | float = 0.1, modif_key=None) -> None:
         if modif_key is not None:
@@ -207,6 +218,10 @@ class MainWin(tk.Tk):
                 self.icp.mouse_down(*self.unpuck(lparam), button='mouse5')
             case 'mouse5up':
                 self.icp.mouse_up(*self.unpuck(lparam), button='mouse5')
+            case 'wheeldown':
+                self.icp.wheeldown(mult=lparam)
+            case 'wheelup':
+                self.icp.wheelup(mult=lparam)
             case 'move':
                 self.icp.move(*self.unpuck(lparam))
             case 'mover':
