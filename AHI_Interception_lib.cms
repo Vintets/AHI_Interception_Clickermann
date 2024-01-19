@@ -148,13 +148,16 @@ SUB(ICP_mouse5up, $ICP_x, $ICP_y)
     PostMessage($hwnd_ICP, AI_mouse5up, 0x0001, $ICP_x + ($ICP_y * 65536))
 END_SUB
 
-#define AI_move:0xC449
+
+
+
+#define AI_move:0xC44B
 SUB(ICP_move, $ICP_x, $ICP_y)
     // ICP move
     PostMessage($hwnd_ICP, AI_move, 0x0001, $ICP_x + ($ICP_y * 65536))
 END_SUB
 
-#define AI_mover:0xC44A
+#define AI_mover:0xC44C
 SUB(ICP_mover, $ICP_x, $ICP_y)
     // ICP mover
     PostMessage($hwnd_ICP, AI_mover, 0x0001, $ICP_x + ($ICP_y * 65536))

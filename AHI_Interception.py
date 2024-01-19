@@ -40,8 +40,8 @@ MSG_HOOK = {
     0xC443: 'mouse5down',
     0xC444: 'mouse5up',
 
-    0xC449: 'move',
-    0xC44A: 'mover',
+    0xC44B: 'move',
+    0xC44C: 'mover',
 }
 
 
