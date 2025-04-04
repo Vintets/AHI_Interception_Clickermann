@@ -33,8 +33,12 @@
     //"files.encoding": "utf8",
     //"files.eol": "auto",  //  - \n: LF    \r\n: CRLF
 
-    // не удалять завершающие пробелы
-    "files.trimTrailingWhitespace": false,
+    // удалять завершающие пробелы
+    // "files.trimTrailingWhitespace": true,
+    "[markdown]": {
+        // "files.trimFinalNewlines": false,
+        "files.trimTrailingWhitespace": false
+    },
 
     // исключаем файлы и папки
     "files.exclude": {
