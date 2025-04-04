@@ -15,13 +15,21 @@ $AHI_wnd_title_py = "AHI_Interception_py"
 #include "AHI_Interception_lib.cms"
 
 // Start
-
+WAITMS(100)
 
 // показать GUI-окно питоновского модуля через 3 сек.
-WAIT(3)
-ICP_wnd_show()
-WAIT(0.5)
+// WAIT(3)
+// ICP_wnd_show()
+// WAIT(0.5)
 
-ICP_lclick(200, 300)
+//ICP_lclick(200, 300)
+//WAITMS(100)
+
+ICP_lclick(2480, 420)
+WAITMS(500)
+
+ICP_keypress(#5)
+WAITMS(20)
+//ICP_keypress_ex(#N, 50)
 
 HALT

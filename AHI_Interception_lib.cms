@@ -172,6 +172,37 @@ SUB(ICP_mover, $ICP_x, $ICP_y)
     PostMessage($hwnd_ICP, AI_mover, 0x0001, $ICP_x + ($ICP_y * 65536))
 END_SUB
 
+// *********************************  KEYBOARD *********************************
+#define AI_keypress:0xC450
+SUB(ICP_keypress, $ICP_key)
+    // ICP keypress
+    PostMessage($hwnd_ICP, AI_keypress, 0x0001, $ICP_key)
+END_SUB
+
+#define AI_keypress_ex:0xC450
+SUB(ICP_keypress_ex, $ICP_key, $ICP_delay)
+    // ICP keypress_ex
+    PostMessage($hwnd_ICP, AI_keypress_ex, $ICP_delay, $ICP_key)
+END_SUB
+
+#define AI_keydown:0xC452
+SUB(ICP_keydown, $ICP_key)
+    // ICP keydown
+    PostMessage($hwnd_ICP, AI_keydown, 0x0001, $ICP_key)
+END_SUB
+
+#define AI_keyup:0xC454
+SUB(ICP_keyup, $ICP_key)
+    // ICP keyup
+    PostMessage($hwnd_ICP, AI_keyup, 0x0001, $ICP_key)
+END_SUB
+
+#define AI_keystring:0xC456
+SUB(ICP_keystring, $ICP_keys, $ICP_delay)
+    // ICP keystring
+    PostMessage($hwnd_ICP, AI_keystring, $ICP_delay, $ICP_keys)
+END_SUB
+
 //------------------------------------------------------------------------------
 
 
