@@ -73,7 +73,7 @@ class ICP:
         # interception.capture_mouse()
         interception.auto_capture_devices(keyboard=True, mouse=True)
 
-    def _set_key_mapping(self) -> dict[str: int]:  # noqa: CFQ001
+    def _set_key_mapping(self) -> dict[str, int]:  # noqa: CFQ001
         key_mapping = {
             'f1': 0x70,
             'f2': 0x71,
@@ -211,7 +211,7 @@ class ICP:
         #     print(f'{k:<19}{v:<5}{map_virtual_key:<3}')
         return key_mapping
 
-    def get_char_by_keycode(self, keycode) -> Optional[str]:
+    def get_char_by_keycode(self, keycode: int) -> Optional[str]:
         try:
             return list(self.key_mapping.keys())[list(self.key_mapping.values()).index(keycode)]
         except ValueError:
@@ -276,20 +276,25 @@ class ICP:
         interception.mouse_up(button)
 
     def wheeldown(self, mult: Optional[int] = 1):
-        for _ in range(mult):
-            interception.scroll(direction='down')
+        if mult is not None:
+            for _ in range(mult):
+                interception.scroll(direction='down')
 
     def wheelup(self, mult: Optional[int] = 1):
-        for _ in range(mult):
-            interception.scroll(direction='up')
+        if mult is not None:
+            for _ in range(mult):
+                interception.scroll(direction='up')
 
-    def keypress(self, key: str | int, presses: int = 1, interval_ms: int = 0, modif_key=None) -> None:
-        if isinstance(key, int):
-            print(f'lparam {key}')
-            key = self.get_char_by_keycode(key)
+    def keypress(self, key_si: str | int, presses: int = 1, interval_ms: int = 0, modif_key=None) -> None:
+        key: Optional[str]
+        if isinstance(key_si, int):
+            print(f'lparam {key_si}')
+            key = self.get_char_by_keycode(key_si)
+        else:
+            key = key_si
         if key is None:
             return
-        print(f'{key = }')
+        print(f'{key = }')  # noqa E251
         interval = interval_ms / 1000
         if modif_key is not None:
             with interception.hold_key(modif_key):
