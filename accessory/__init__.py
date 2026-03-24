@@ -1,4 +1,4 @@
-from .authorship import authorship  # noqa: E402
+from .author_ship import authorship
 
 
 __all__ = (
