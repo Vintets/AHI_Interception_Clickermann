@@ -14,7 +14,7 @@ Working with AHI_Interception in Clickermann via Python
 
 ## Зависимости Requirements
 
-![Python version](https://img.shields.io/badge/python-3.9%2B-blue)
+![Python version](https://img.shields.io/badge/python-3.10%2B-blue)
 > Требуется Python 3.10.0+
 
 Установка зависимостей:
@@ -29,9 +29,10 @@ pip3 install -r requirements.txt
 https://github.com/oblitum/Interception
 Для удобства, в данном проекте уже скачан архив Interception_v1.0.1.7z
 
+- распаковать архив Interception_v1.0.1.7z
 - установить драйвер (запускать в консоли, от имени администратора):
 ```sh
-command line installer/install-interception.exe /install
+"Interception_v1.0.1/command line installer/install-interception.exe" /install
 ```
 
 Если запустить install-interception.exe без каких-либо аргументов в консоли, выдаст инструкции по установке.
